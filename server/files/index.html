@@ -7,6 +7,43 @@
     <title>Movies!</title>
     <style>
         /* Part 3: Your styling goes here */
+        body {
+        font-family: Monospace, Arial, sans-serif;
+      }
+      img{
+        border-radius: 8%;
+        max-width: 500px;
+      }
+      h1{
+        font-weight: bold;
+        margin: 20%;
+      }
+      section{
+        display: flex;
+        flex-wrap:wrap;
+       
+      }
+      article{
+        background-color: bisque;
+        border-radius: 3%;
+        margin: 50px;
+        padding:20px;
+        box-shadow: 30px;
+        flex: 2;  
+        max-width: 400px;
+        min-width: 400px;
+      }
+      span{
+        margin-right: 10px;
+      }
+      span.genre{
+        background-color: beige;
+        padding-left: 10px;
+        padding-right: 10px;
+        border: 1px solid black;
+        border-radius: 30%;
+      }
+
     </style>
     <script>
         function reverseString(s) {
@@ -19,7 +56,85 @@
                 const bodyElement = document.querySelector("body")
                 if (xhr.status == 200) {
 		            /* Part 2: Build the HTML elements here and append them to the body */ 
-                    bodyElement.append(reverseString(xhr.responseText))
+                    const movies = JSON.parse(xhr.responseText)
+                    const movieSection = document.createElement("section")
+                    movies.forEach(element => {
+                        const movieArticle = document.createElement("article")
+
+                        const actorList = document.createElement("ul")
+                        const writerList = document.createElement("ul")
+                        const genreList = document.createElement("p")
+
+                        const ratingSection = document.createElement("section")
+                        const writersSection = document.createElement("section")
+                        const actorsSection = document.createElement("section")
+                        const descriptionSection = document.createElement("section")
+
+                        element.Actors.forEach(actor => {
+                            const actorOnList = document.createElement("li")
+                            actorOnList.textContent = actor
+                            actorList.append(actorOnList)
+                        })
+
+                        element.Writers.forEach(writer => {
+                            const writerOnList = document.createElement("li")
+                            writerOnList.textContent = writer
+                            writerList.append(writerOnList)
+                        })
+
+                        element.Genres.forEach(genre => {
+                            const genreOnList = document.createElement("span")
+                            genreOnList.textContent = genre
+                            genreOnList.classList.add("genre")
+                            genreList.append(genreOnList)
+                        })
+
+                        const poster = document.createElement("img")
+                        poster.src=element.Poster
+
+                        const title = document.createElement("h1")
+                        title.textContent=element.Title
+
+                        const description = document.createElement("h2")
+                        description.textContent= "Description"
+
+                         const actors = document.createElement("h2")
+                        actors.textContent= "Actors"
+
+                         const writers = document.createElement("h2")
+                        writers.textContent= "Writers"
+
+                        const headline = document.createElement("p")
+                        headline.textContent=  element.Released + ", " + element.Runtime + " minutes" 
+
+                        const directors = document.createElement("p")
+                        directors.textContent="Directed by " + element.Directors 
+
+                        const plot = document.createElement("p")
+                        plot.textContent=element.Plot
+
+                        const genreText = document.createElement("p")
+                        genreText.textContent=element.Genres
+
+                        const ratings = document.createElement("h2")
+                        ratings.textContent="Ratings"
+
+                        const ratingsText1 = document.createElement("p")
+                        ratingsText1.textContent="Rated " + element.Metascore + " out of 100 on Metascore"
+
+                        const ratingsText2 = document.createElement("p")
+                        ratingsText2.textContent= "Rated " + element.imdbRating + " out of 10 on ImdB" 
+
+                        ratingSection.append(ratings, ratingsText1, ratingsText2)
+                        writersSection.append(writers, writerList)
+                        actorsSection.append(actors, actorList)
+                        descriptionSection.append(description, plot)
+
+                        movieArticle.append(poster,title, headline, genreList, directors, ratingSection, descriptionSection,actorsSection, writersSection)
+                     movieSection.append(movieArticle)
+                    });
+                   
+                    bodyElement.append(movieSection)
                 } else {
                     bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText)
                 }
