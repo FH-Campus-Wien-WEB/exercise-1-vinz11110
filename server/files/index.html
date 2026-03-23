@@ -7,41 +7,63 @@
     <title>Movies!</title>
     <style>
         /* Part 3: Your styling goes here */
-        body {
+      body {
         font-family: Monospace, Arial, sans-serif;
       }
       img{
         border-radius: 8%;
         max-width: 500px;
+        display: block;
+        margin: auto;
       }
-      h1{
-        font-weight: bold;
-        margin: 20%;
+      p{
+        margin-bottom: 10px;
       }
       section{
+        margin: 10px;
+        border-bottom: 5px dashed black;
+      }
+      h1{
+        font-weight: bolder;
+        margin: 5%;
+        text-align: center;
+      }
+      h2{
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      main{
         display: flex;
         flex-wrap:wrap;
-       
+        justify-content: center;
       }
       article{
-        background-color: bisque;
+        background-color: rgb(255, 234, 186);
         border-radius: 3%;
-        margin: 50px;
-        padding:20px;
-        box-shadow: 30px;
-        flex: 2;  
-        max-width: 400px;
-        min-width: 400px;
+        margin: 20px;
+        padding:10px;
+        box-shadow: 10px 10px 20px rgb(0, 0, 0);
+        flex: 1; 
+        width: 300px;
+        max-width: 300px;
       }
       span{
         margin-right: 10px;
       }
       span.genre{
-        background-color: beige;
-        padding-left: 10px;
-        padding-right: 10px;
-        border: 1px solid black;
-        border-radius: 30%;
+        background-color: rgb(215, 215, 215);
+        padding: 5px;
+        border: 2px dotted black;
+        border-radius: 10%;
+      }
+      li{
+        background-color: rgb(250, 250, 250); 
+        padding: 5px;
+        margin-right: 5px;
+        border: 2px black;
+        border-radius: 10px;
+        border-style: inset;
+        display: inline-block;
       }
 
     </style>
@@ -57,18 +79,19 @@
                 if (xhr.status == 200) {
 		            /* Part 2: Build the HTML elements here and append them to the body */ 
                     const movies = JSON.parse(xhr.responseText)
-                    const movieSection = document.createElement("section")
+                    const myMovies = document.createElement("main")
                     movies.forEach(element => {
                         const movieArticle = document.createElement("article")
 
                         const actorList = document.createElement("ul")
                         const writerList = document.createElement("ul")
-                        const genreList = document.createElement("p")
+                        const genreList = document.createElement("div")
 
                         const ratingSection = document.createElement("section")
                         const writersSection = document.createElement("section")
                         const actorsSection = document.createElement("section")
                         const descriptionSection = document.createElement("section")
+                        const headSection = document.createElement("section")
 
                         element.Actors.forEach(actor => {
                             const actorOnList = document.createElement("li")
@@ -85,8 +108,8 @@
                         element.Genres.forEach(genre => {
                             const genreOnList = document.createElement("span")
                             genreOnList.textContent = genre
-                            genreOnList.classList.add("genre")
                             genreList.append(genreOnList)
+                            genreOnList.classList.add("genre")
                         })
 
                         const poster = document.createElement("img")
@@ -113,9 +136,6 @@
                         const plot = document.createElement("p")
                         plot.textContent=element.Plot
 
-                        const genreText = document.createElement("p")
-                        genreText.textContent=element.Genres
-
                         const ratings = document.createElement("h2")
                         ratings.textContent="Ratings"
 
@@ -125,16 +145,17 @@
                         const ratingsText2 = document.createElement("p")
                         ratingsText2.textContent= "Rated " + element.imdbRating + " out of 10 on ImdB" 
 
+                        headSection.append(title, headline, genreList, directors)
                         ratingSection.append(ratings, ratingsText1, ratingsText2)
                         writersSection.append(writers, writerList)
                         actorsSection.append(actors, actorList)
                         descriptionSection.append(description, plot)
 
-                        movieArticle.append(poster,title, headline, genreList, directors, ratingSection, descriptionSection,actorsSection, writersSection)
-                     movieSection.append(movieArticle)
+                        movieArticle.append(poster, headSection, ratingSection, descriptionSection,actorsSection, writersSection)
+                     myMovies.append(movieArticle)
                     });
-                   
-                    bodyElement.append(movieSection)
+                
+                    bodyElement.append(myMovies)
                 } else {
                     bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText)
                 }
