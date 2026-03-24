@@ -21,16 +21,16 @@
       }
       section{
         margin: 10px;
-        border-bottom: 5px double black;
+        border-bottom: 5px dashed black;
       }
-      h2{
+      h1{
         font-weight: bolder;
         margin: 5%;
         text-align: center;
       }
-      h3{
+      h2{
         margin-bottom: 10px;
-        
+        text-align: center;
       }
       main{
         display: flex;
@@ -41,8 +41,7 @@
         background-color: rgb(255, 234, 186);
         border-radius: 3%;
         margin: 20px;
-        padding-bottom:40px;
-        padding: 10px;
+        padding:10px;
         box-shadow: 10px 10px 20px rgb(0, 0, 0);
         flex: 1; 
         width: 300px;
@@ -86,13 +85,13 @@
 
                         const actorList = document.createElement("ul")
                         const writerList = document.createElement("ul")
-                        const genreList = document.createElement("p")
+                        const genreList = document.createElement("div")
 
                         const ratingSection = document.createElement("section")
                         const writersSection = document.createElement("section")
                         const actorsSection = document.createElement("section")
                         const descriptionSection = document.createElement("section")
-                        const headSection = document.createElement("header")
+                        const headSection = document.createElement("section")
 
                         element.Actors.forEach(actor => {
                             const actorOnList = document.createElement("li")
@@ -115,18 +114,17 @@
 
                         const poster = document.createElement("img")
                         poster.src=element.Poster
-                        poster.alt=element.Title + " poster"
 
-                        const title = document.createElement("h2")
+                        const title = document.createElement("h1")
                         title.textContent=element.Title
 
-                        const description = document.createElement("h3")
+                        const description = document.createElement("h2")
                         description.textContent= "Description"
 
-                         const actors = document.createElement("h3")
+                         const actors = document.createElement("h2")
                         actors.textContent= "Actors"
 
-                         const writers = document.createElement("h3")
+                         const writers = document.createElement("h2")
                         writers.textContent= "Writers"
 
                         const headline = document.createElement("p")
@@ -138,7 +136,7 @@
                         const plot = document.createElement("p")
                         plot.textContent=element.Plot
 
-                        const ratings = document.createElement("h3")
+                        const ratings = document.createElement("h2")
                         ratings.textContent="Ratings"
 
                         const ratingsText1 = document.createElement("p")
